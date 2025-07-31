@@ -6,8 +6,6 @@ const app = express();
 //   res.send("Hello World!");
 // });
 
-// get a list of 5 jokes
-
 const jokes = [
   {
     id: 1,
@@ -17,13 +15,13 @@ const jokes = [
   },
   {
     id: 2,
-    title: "joke 2",
+    title: "joke2",
     content:
       "Why don't scientists trust atoms? Because they make up everything!",
   },
   {
     id: 3,
-    title: "joke 3",
+    title: "joke3",
     content: "What do you call fake spaghetti? An impasta!",
   },
 ];
@@ -39,6 +37,16 @@ app.get("/api/jokes/:id", (req, res) => {
     res.send(joke);
   } else {
     res.status(404).send({ message: "Joke not found" });
+  }
+});
+
+app.get("/api/jokes/title/:title", (req, res) => {
+  const jokeTitle = req.params.title;
+  const joke = jokes.find((j) => j.title.trim() === jokeTitle.trim());
+  if(joke){
+    res.send(joke);
+  }else{
+    res.status(404).send({message: "Joke not found"});
   }
 });
 
